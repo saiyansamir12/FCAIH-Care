@@ -11,6 +11,10 @@ using backend.Controllers;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
+using backend.DTL;
+
+using Microsoft.EntityFrameworkCore;
+
 
 public class Startup
 {
@@ -22,6 +26,8 @@ public class Startup
 
     public void ConfigureServices(IServiceCollection services)
     {
+        services.AddDbContext<AppConn>(options =>
+          options.UseSqlServer(Configuration.GetConnectionString("UserAppCon")));
         // Add configuration to access appsettings.json
         IConfiguration configuration = new ConfigurationBuilder()
             .AddJsonFile("appsettings.json", optional: false, reloadOnChange: true)
