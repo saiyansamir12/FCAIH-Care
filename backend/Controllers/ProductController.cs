@@ -1,3 +1,4 @@
+using backend.DTL;
 using backend.Models;
 using backend.Repositories;
 using Microsoft.AspNetCore.Cors;
@@ -18,11 +19,16 @@ namespace backend.Controllers
     public class ProductController : ControllerBase
     {
         private readonly IRepository<Product> _productRepository;
+        private readonly AppConn _context;
 
-        public ProductController(IRepository<Product> productRepository)
+     
+    public  ProductController(IRepository<Product> productRepository, AppConn context)
         {
             _productRepository = productRepository;
+            _context = context;
         }
+
+      
 
         [HttpGet]
         public IActionResult Get()

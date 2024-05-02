@@ -3,6 +3,9 @@ using backend.Repositories;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Serilog;
+using backend.DTL;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Identity;
 
 namespace backend
 {
@@ -32,13 +35,17 @@ namespace backend
             builder.Services.AddScoped<IRepository<Product>, ProductRepository>();
 
             builder.Services.AddScoped<IListRepository<Order>, OrderRepository>();
-            builder.Services.AddScoped<IListRepository<ProductSize>, ProductSizeRepository>();
+            builder.Services.AddScoped<IRepository<ProductSize>, ProductSizeRepository>();
+
             builder.Services.AddScoped<IListRepository<OrderItem>, OrderItemRepository>();
 
             builder.Services.AddControllers();
             // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();
+
+            builder.Services.AddDbContext<AppConn>(options => options.UseSqlServer
+   (builder.Configuration.GetConnectionString("UserAppCon")));
 
             var app = builder.Build();
 

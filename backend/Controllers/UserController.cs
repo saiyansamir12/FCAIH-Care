@@ -7,7 +7,7 @@ using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
-using backend;
+using backend.DTL;
 
 namespace backend.Controllers
 {
@@ -19,11 +19,13 @@ namespace backend.Controllers
     {
         private readonly IConfiguration _configuration;
         private readonly IRepository<User> _userRepository;
-
-        public UserController(IConfiguration configuration, IRepository<User> userRepository)
+        private readonly AppConn _context;
+        public UserController(IConfiguration configuration, IRepository<User> userRepository, AppConn context)
         {
+            
             _configuration = configuration;
             _userRepository = userRepository;
+            _context = context;
         }
 
         [HttpGet]
