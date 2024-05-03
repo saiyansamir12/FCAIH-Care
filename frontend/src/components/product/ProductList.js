@@ -10,11 +10,10 @@ function ProductList() {
   const { toggle, isToggled } = useToggle();
   const { products, fetchProducts } = useProduct();
   const { minPrice: filterMinPrice, maxPrice: filterMaxPrice } = useSelector((state) => state.product.filter);
-
   const [minPrice, setMinPrice] = useState(filterMinPrice || '');
   const [maxPrice, setMaxPrice] = useState(filterMaxPrice || '');
   const [sortOrder, setSortOrder] = useState('asc');
-  const [size, setSize] = useState('');
+  const [category, setCategory] = useState('');
 
   useEffect(() => {
     fetchProducts();
@@ -23,7 +22,7 @@ function ProductList() {
   const filteredProducts = products.filter((product) => {
     const minPriceFilter = minPrice === '' || product.defaultPrice >= parseFloat(minPrice);
     const maxPriceFilter = maxPrice === '' || product.defaultPrice <= parseFloat(maxPrice);
-    const sizeFilter = size === '' || product.sizes.map(ps => ps.size).includes(parseInt(size));  
+      const sizeFilter = category === '' || product.sizes.map(ps => ps.size).includes(parseInt(category));  
     return minPriceFilter && maxPriceFilter && sizeFilter;
   }).sort((a, b) => {
     if (sortOrder === 'lowToHigh') {
@@ -45,7 +44,7 @@ function ProductList() {
         <div className='filter-option'>
           <div className="filter-div">
             <label htmlFor="size">Categories:</label>
-              <select id="size" name="size" value={size} onChange={(event) => setSize(event.target.value)}>
+                          <select id="size" name="size" value={category} onChange={(event) => setCategory(event.target.value)}>
               <option value="">All</option>
               {Array.from({ length: 16 }, (_, i) => i + 35).map(size => (
                 <option key={size} value={size}>{size}</option>

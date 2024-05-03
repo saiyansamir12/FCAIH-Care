@@ -4,26 +4,31 @@ import productApi from '../../utils/api/productApi';
 import categoryApi from '../../utils/api/CategoryApi';
 
 export const fetchProducts = createAsyncThunk(
-  'products/fetchProducts',
-  async () => {
-    const products = await productApi.getProducts();
-      const productCategorys = await categoryApi.getProductCategorys();
-      const ProductCategoriesMap = productCategorys.reduce((map, Category) => {
-      if (!map[Category.productID]) {
-        map[Category.productID] = [];
-      }
-      map[Category.productID].push(Category);
-      return map;
-    }, {});
-    const productsWithCategorys = products.map(product => {
-      const { productID } = product;
-        const categories = ProductCategoriesMap[productID] || [];
-        const minPrice = Math.min(...categories.map(({ price }) => price));
-        const inStock = categories.length > 0;
-        return { ...product, categories, defaultPrice: minPrice, inStock };
-    });
-    return productsWithCategorys;
-  }
+    'products/fetchProducts',
+    async (_, { rejectWithValue }) => {
+        try {
+            const products = await productApi.getProducts();
+            const productCategorys = await categoryApi.getProductCategorys();
+            console.log(productCategorys)
+            const ProductCategoriesMap = productCategorys.reduce((map, category) => {
+                if (!map[category.ProductID]) {
+                    map[category.ProductID] = [];
+                }
+                map[category.productID].push(category);
+                return map;
+            }, {});
+            const productsWithCategorys = products.map(product => {
+                const { productID } = product;
+                const categories = ProductCategoriesMap[productID] || [];
+                const minPrice = Math.min(...categories.map(({ price }) => price));
+                const inStock = categories.length > 0;
+                return { ...product, categories, defaultPrice: minPrice, inStock };
+            });
+            return productsWithCategorys;
+        } catch (error) {
+            return rejectWithValue(error.message);
+        }
+    }
 );
 
 

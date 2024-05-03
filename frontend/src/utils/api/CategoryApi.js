@@ -3,7 +3,7 @@ import { variables } from './variables.js';
 
 const API_URL = variables.PRODUCTCATEGORY_API
 
-const getProductCategories = async () => {
+const getProductCategorys = async () => {
     const response = await axios.get(API_URL);
     return response.data;
 }
@@ -30,7 +30,7 @@ const deleteProductCategory = async (productCategoryId) => {
 
 
 export default {
-    getProductCategories,
+    getProductCategorys,
     getProductCategory,
     addProductCategory,
     updateProductCategory,

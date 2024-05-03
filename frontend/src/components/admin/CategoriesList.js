@@ -24,8 +24,8 @@ function Users() {
             <tbody>
                 {data.map((categories, index) => (
                     <tr key={index}>
-                        <td>{categories.ProductCategoryID}</td>
-                        <td>{categories.Category} {categories.Category}</td>
+                        <td>{categories.productCategoryID}</td>
+                        <td>{categories.category} {categories.category}</td>
                     </tr>
                 ))}
             </tbody>

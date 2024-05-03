@@ -12,7 +12,8 @@ function Products() {
 
     useEffect(() => {
         fetchProducts();
-    }, [])
+        console.log(products)
+    }, [products])
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
