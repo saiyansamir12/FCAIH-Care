@@ -17,6 +17,8 @@
         public OrderStatus Status { get; set; }
         public int UserID { get; set; }
 
+        public Order() { }
+
         public Order(int orderID, DateTime dateTime, decimal totalPrice, OrderStatus status, int userID)
         {
             OrderID = orderID;

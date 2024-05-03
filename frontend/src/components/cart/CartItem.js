@@ -19,8 +19,6 @@ function CartItem() {
           <div className='cart-item-about'>
             <div className='cart-item-left'>
               <Link to={`/${item.product.productID}`}><p>{item.product.brand} {item.product.name}</p></Link>
-              <p>Brand: {item.product.brand}</p>
-              <p>Size: {item.size}</p>
               <p>Quantity: {item.quantity}</p>
               <a onClick={() => removeFromCart(item.product.id, item.size)}>Remove</a>
               </div>

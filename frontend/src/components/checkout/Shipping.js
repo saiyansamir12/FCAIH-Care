@@ -18,7 +18,7 @@ function Details() {
             <p>{currentUser?.firstName} {currentUser?.lastName}</p>
             <p>{currentUser?.address}</p>
             <p>{currentUser?.postalCode} {currentUser?.city}</p>
-            <p>Denmark</p>
+            <p>Egypt</p>
             { isToggled() && <div>
                 <div className="line-divider"></div>
                 <div className="divider">

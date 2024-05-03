@@ -7,35 +7,35 @@ using backend.DTL;
 
 namespace backend.Repositories
 {
-    public class ProductSizeRepository : IRepository<ProductSize>
+    public class ProductCategoryRepository : IListRepository<ProductCategory>
     {
         private readonly AppConn _context;
 
-        public ProductSizeRepository(AppConn context)
+        public ProductCategoryRepository(AppConn context)
         {
             _context = context;
         }
 
-        public IEnumerable<ProductSize> GetAll()
+        public IEnumerable<ProductCategory> GetAll()
         {
-            return _context.ProductSizes.ToList();
+            return _context.ProductCategorys.ToList();
         }
 
-        public ProductSize GetById(int productSizeId)
+        public List<ProductCategory> GetById(int id)
         {
-            return _context.ProductSizes.FirstOrDefault(ps => ps.ProductSizeID == productSizeId);
+            return _context.ProductCategorys.Where(ps => ps.ProductID == id).ToList();
         }
 
-        public List<ProductSize> GetByProductId(int productId)
+        public List<ProductCategory> GetByProductId(int productId)
         {
-            return _context.ProductSizes.Where(ps => ps.ProductID == productId).ToList();
+            return _context.ProductCategorys.Where(ps => ps.ProductID == productId).ToList();
         }
 
-        public bool Add(ProductSize productSize)
+        public bool Add(ProductCategory productCategory)
         {
             try
             {
-                _context.ProductSizes.Add(productSize);
+                _context.ProductCategorys.Add(productCategory); // Use productCategory, not ProductCategory
                 _context.SaveChanges();
                 return true;
             }
@@ -45,11 +45,11 @@ namespace backend.Repositories
             }
         }
 
-        public bool Update(ProductSize productSize)
+        public bool Update(ProductCategory productCategory)
         {
             try
             {
-                _context.Entry(productSize).State = EntityState.Modified;
+                _context.Entry(productCategory).State = EntityState.Modified;
                 _context.SaveChanges();
                 return true;
             }
@@ -59,14 +59,14 @@ namespace backend.Repositories
             }
         }
 
-        public bool Delete(int productSizeID)
+        public bool Delete(int productCategoryID)
         {
-            var productSize = _context.ProductSizes.Find(productSizeID);
+            var productSize = _context.ProductCategorys.Find(productCategoryID);
             if (productSize != null)
             {
                 try
                 {
-                    _context.ProductSizes.Remove(productSize);
+                    _context.ProductCategorys.Remove(productSize);
                     _context.SaveChanges();
                     return true;
                 }
@@ -76,6 +76,10 @@ namespace backend.Repositories
                 }
             }
             return false;
+        }
+        public ProductCategory GetObjById(int id)
+        {
+            return _context.ProductCategorys.Find(id);
         }
     }
 }

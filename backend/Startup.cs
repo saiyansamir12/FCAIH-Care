@@ -14,6 +14,7 @@ using System.Text;
 using backend.DTL;
 
 using Microsoft.EntityFrameworkCore;
+using backend.Models;
 
 
 public class Startup
@@ -95,12 +96,12 @@ public class Startup
         });
 
         // Add repositories
-        services.AddScoped(typeof(IRepository<>), typeof(UserRepository));
-        services.AddScoped(typeof(IRepository<>), typeof(ProductRepository));
+        services.AddScoped<IRepository<User>, UserRepository>();
+        services.AddScoped<IRepository<Product>, ProductRepository>();
 
-        services.AddScoped(typeof(IListRepository<>), typeof(OrderRepository));
-        services.AddScoped(typeof(IListRepository<>), typeof(ProductSizeRepository));
-        services.AddScoped(typeof(IListRepository<>), typeof(OrderItemRepository));
+        services.AddScoped<IListRepository<Order>, OrderRepository>();
+        services.AddScoped<IListRepository<ProductCategory>, ProductCategoryRepository>();
+        services.AddScoped<IListRepository<OrderItem>, OrderItemRepository>();
 
         // Add controllers
         services.AddControllers();

@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import OrderSummary from './OrderSummary'
 import CartItem from "../cart/CartItem";
 import { useUser} from "../../utils/hooks/useUser"
@@ -29,8 +29,8 @@ function Confirmation({onPaymentComplete}) {
               <input placeholder="Discount Code" type="text" onChange={(e) => setDiscountCode(e.target.value)} />
               <button onClick={() => applyDiscount(discountCode)}>Apply</button>
             </div>
-          }
-        <OrderSummary onPaymentComplete={onPaymentComplete}/>
+              }
+          <OrderSummary onPaymentComplete={onPaymentComplete}/>
       </div>
     </div>
   )

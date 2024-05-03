@@ -1,20 +1,19 @@
-import React, { useState } from 'react';
+import React from 'react';
 
 function Payment() {
-
-  return (
-    <div className='checkout-payment'>
-      <h1>PAYMENT OPTIONS</h1>
-      <div className="line-divider"></div>
-      <div className="payment-option">
-        <label>
-          <input type="radio" value="creditCard" checked readOnly />
-          Credit Card &#40;Free&#41;
-        </label>  
-      </div>
-      <p>You will be redirected to PayPal to complete your payment.</p>
-    </div>
-  )
+    return (
+        <div className='checkout-payment'>
+            <h1>PAYMENT OPTIONS</h1>
+            <div className="line-divider"></div>
+            <div className="payment-option">
+                <label>
+                    <input type="radio" value="cashOnDelivery" checked readOnly />
+                    Cash on Delivery
+                </label>
+            </div>
+            <p>Please have the exact amount ready at the time of delivery.</p>
+        </div>
+    )
 }
 
 export default Payment;

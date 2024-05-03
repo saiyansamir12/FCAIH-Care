@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import ProductSizes from './SizesTable';
+import ProductSizes from './CategoriesTable';
 import { useProduct } from '../../utils/hooks/useProduct';
 import { useStock } from '../../utils/hooks/useUtil';
 
@@ -25,7 +25,7 @@ function Products() {
             <thead>
                 <tr>
                   <th>ID</th>
-                  <th>Model</th>
+                  <th>Name</th>
                   <th>Stock</th>
                 </tr>
             </thead>
@@ -53,11 +53,7 @@ function Products() {
                   <input value={localProduct?.productID} readOnly/>
                 </label>)}
                 <label>
-                    Brand
-                  <input id="productBrand" name="brand" maxLength="50" value={localProduct?.brand || ''} onChange={handleInputChange} />
-                </label>
-                <label>
-                  Model
+                  Name
                   <input id="productName" name="name" maxLength="100" value={localProduct?.name || ''} onChange={handleInputChange}/>
                 </label>
               </div>

@@ -19,7 +19,7 @@ function ProductSizes({ product }) {
       <table className='size-table'>
         <thead>
           <tr>
-            <th>Size</th>
+            <th>Category</th>
             <th>Price</th>
             <th>Quantity</th>
             <th>Edit</th>
@@ -29,7 +29,7 @@ function ProductSizes({ product }) {
           <tr>
             <td>
               <select id="size" value={newSize.size} onChange={(e) => setNewSize({ ...newSize, size: e.target.value })}>
-                <option disabled value="">Add size</option>
+                <option disabled value="">Select Category</option>
                 {Array.from({ length: 16 }, (_, i) => i + 35)
                   .filter((size) => !product?.sizes.find((ps) => ps.size === size))
                   .map((size, index) => (

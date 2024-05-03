@@ -44,7 +44,7 @@ function ProductList() {
         { isToggled() && 
         <div className='filter-option'>
           <div className="filter-div">
-            <label htmlFor="size">Size:</label>
+            <label htmlFor="size">Categories:</label>
               <select id="size" name="size" value={size} onChange={(event) => setSize(event.target.value)}>
               <option value="">All</option>
               {Array.from({ length: 16 }, (_, i) => i + 35).map(size => (
@@ -52,12 +52,8 @@ function ProductList() {
               ))}
               </select>
         </div>
-        <div className="filter-div filter-spec">
-          <label htmlFor="size">Pris:</label>
-              <input type="number" id="minPrice" placeholder="min. kr" name="minPrice" value={minPrice} onChange={(event) => setMinPrice(event.target.value)} />
-              <p>-</p>
-              <input type="number" id="maxPrice" placeholder="max. kr" name="maxPrice" value={maxPrice} onChange={(event) => setMaxPrice(event.target.value)} />
-        </div>
+                      <div className="filter-div filter-spec">
+                      </div>
         <div className="filter-div">
           <label>Sort by:</label>
             <select id="sort" name="sort" value={sortOrder} onChange={(event) => setSortOrder(event.target.value)}>

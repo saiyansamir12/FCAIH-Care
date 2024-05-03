@@ -1,42 +1,42 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
-
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { icons } from '../../assets/icons/icons';
 import { useLocation } from 'react-router-dom';
 import { useCart } from '../../utils/hooks/useCart';
 import { useWishlist } from '../../utils/hooks/useWishlist';
-import { searchProducts} from '../../store/reducers/productSlice';
+import { searchProducts } from '../../store/reducers/productSlice';
+import { useUser } from "../../utils/hooks/useUser"; // import useUser
 
 function Header() {
-  const location = useLocation();
-  const { quantity } = useCart();
-  const { wishlistCount } = useWishlist();
-  const dispatch = useDispatch();
-  
-  const isHome = location.pathname === '/';
-  const isShop = location.pathname === '/shop';
+    const location = useLocation();
+    const { quantity } = useCart();
+    const { wishlistCount } = useWishlist();
+    const dispatch = useDispatch();
+    const { currentUser } = useUser(); // get current user
 
-  const handleSearchChange = (e) =>  {
-    dispatch(searchProducts(e.target.value))
-  }
+    const isHome = location.pathname === '/';
+    const isShop = location.pathname === '/shop';
+
+    const handleSearchChange = (e) => {
+        dispatch(searchProducts(e.target.value))
+    }
 
   return (
     <nav>
       <div className='header-second'>
         <div className="header-second-msg">
-          <p><span>SECURE</span> PAYMENT THROUGH PAYPAL</p>
-          <p><span>FREE</span> SHIPPING ON ORDERS OVER 1.200,00 KR</p>
+          <p><span>SECURE</span> PAYMENT</p>
+          <p><span>FREE</span> SHIPPING ON ORDERS OVER 300 EGP</p>
           <p><span>100%</span> AUTHENTIC</p>
         </div>
       </div>
       <div className="header-container">
-        <Link className="header-main header-section" to="/"><h1>STORE</h1></Link>
+              <Link className="header-main header-section" to="/"><h1>STORE</h1></Link>
         <ul className='header-section'>
-        <li><Link to="/shop">SHOP</Link></li>
-          <li><Link to="/">CONTACT US</Link></li>
-          <li><Link to="/">ABOUT US</Link></li>
+
+          {currentUser && currentUser.role === 'admin' && <li><Link to="/admin">Admin Panel</Link></li>}
         </ul>
         <div className='header-tools header-section'>
           <Link to="/account">

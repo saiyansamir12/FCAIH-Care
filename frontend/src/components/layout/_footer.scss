@@ -6,54 +6,56 @@
     max-width: 1080px;
     margin: auto;
     min-height: 10vh;
-    border-top: 1px solid $color-lightgrey;
     @media (max-width: 700px) {
       display: block;
   }
 }
 
-.footer-section{
+.footer-section {
     flex: 1 1 12rem;
     margin-right: 2rem;
-    h3{
-        font-size: 0.8rem;
+
+    h3 {
+        font-weight: 100;
+        font-size: 18px;
         margin-bottom: 0.8rem;
     }
-    ul{
+
+    ul {
         gap: 5rem;
-        li{
-          padding: 0 0 0.5rem 0;
+
+        li {
+            padding: 0 0 0.5rem 0;
         }
-        li a{
-          font-size: 0.7rem;
+
+        li a {
+            margin-top: -10px;
+            font-size: 14px;
+        }
+
+        li i {
+            font-size: 20px;
+            line-height: 1em;
+            color: #98d648;
+            display: inline-block;
+            margin: -4px 20px 0 0;
+            vertical-align: top;
+        }
+
+        li a:hover {
+            color: #98d648;
+            transition: ease;
         }
     }
+
     @media (max-width: 850px) {
-      margin-top: 1rem;
-  }
-
-}
-
-.footer-socials{
-    flex: 3 1 30rem;
-    flex-direction: row;
-    display: flex;
-    align-items: flex-start;
-    justify-content: flex-end;
-    gap: 1rem;
-    @media (max-width: 1000px) {
-      flex: 1 1 20rem;
+        margin-top: 1rem;
     }
-}
 
-.social-icon-container{
-    border: 1px solid $color-grey;
-    padding: 0.3rem ;
-    border-radius: 50%;
-    a{
-    @include flex(center, center, row);
-    img{
-      height: 24px;
-      }
+    .footer-bottom {
+        border-top: 1px solid #ccc; // Change #ccc to the color you want
+        padding-top: 1rem; // Adjust this value to create more or less space
+        font-size: 0.8rem; // Adjust this value to change the font size
+        text-align: center; // Center the text
     }
 }

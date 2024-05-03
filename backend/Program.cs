@@ -33,10 +33,8 @@ namespace backend
 
             builder.Services.AddScoped<IRepository<User>, UserRepository>();
             builder.Services.AddScoped<IRepository<Product>, ProductRepository>();
-
+            builder.Services.AddScoped<IListRepository<ProductCategory>, ProductCategoryRepository>();
             builder.Services.AddScoped<IListRepository<Order>, OrderRepository>();
-            builder.Services.AddScoped<IRepository<ProductSize>, ProductSizeRepository>();
-
             builder.Services.AddScoped<IListRepository<OrderItem>, OrderItemRepository>();
 
             builder.Services.AddControllers();

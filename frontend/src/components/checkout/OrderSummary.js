@@ -1,27 +1,38 @@
 import React, {useEffect} from 'react'
-import { PayPalScriptProvider, PayPalButtons } from '@paypal/react-paypal-js';
 import { useCart } from "../../utils/hooks/useCart"
-
-
-function OrderSummary({onPaymentComplete}) {
+import orderApi from "../../utils/api/orderApi";
+import { useUser } from '../../utils/hooks/useUser';
+function OrderSummary({ onPaymentComplete }) {
     const buttonStyles = {
         layout: 'vertical',
         color: 'blue',
         label: 'checkout',
     };
-    const { subtotal, delivery, discount, defaultTotal, clearCart } = useCart();
-  
-    const onApprove = async (data, actions) => {
-        const order = await actions.order.capture();
-        console.log('Order details:', order);
-        const email = order.payer.email_address;
-        const transactionId = order.purchase_units[0].payments.captures[0].id;
-        clearCart();
-        alert(`An order confirmation will be sent to email: ${email}. Transaction ID: ${transactionId}.`);
-        onPaymentComplete();
-      };
+    const { subtotal, delivery, discount, defaultTotal, clearCart, items } = useCart();
+    const { currentUser } = useUser();
 
-  return (
+    const onApprove = async () => {
+        const order = {
+            items: items,
+            subtotal: subtotal,
+            delivery: delivery,
+            discount: discount,
+            total: defaultTotal,
+        };
+        console.log('Order details:', order);
+        const newOrder = await orderApi.createOrder({
+            DateTime: new Date().toISOString(),
+            TotalPrice: defaultTotal,
+            Status: 'Pending',
+            UserID: currentUser.userID
+        });
+        console.log('Order details:', newOrder);
+        clearCart();
+        alert(`Your order has been confirmed.`);
+        onPaymentComplete();
+    };
+
+    return (
     <div className='order-summary'>
         <div className="space-between">
             <p>Subtotal</p>
@@ -42,24 +53,7 @@ function OrderSummary({onPaymentComplete}) {
             <p>Total</p>
             <p>{defaultTotal}</p>
         </div>
-        <PayPalScriptProvider options={{ "client-id": "sb", currency: "DKK" }}>
-      <PayPalButtons
-        style={buttonStyles}
-        createOrder={(data, actions) => {
-          return actions.order.create({
-            purchase_units: [
-              {
-                amount: {
-                  currency_code: "DKK",
-                  value: defaultTotal,
-                },
-              },
-            ],
-          });
-        }}
-        onApprove={onApprove}
-      />
-    </PayPalScriptProvider>
+          <button onClick={onApprove}>Confirm</button>
     </div>
   )
 }

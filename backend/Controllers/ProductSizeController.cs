@@ -10,9 +10,9 @@ namespace backend.Controllers
     [EnableCors("_myAllowSpecificOrigins")]
     public class ProductSizeController : ControllerBase
     {
-        private readonly IListRepository<ProductSize> _psRepository;
+        private readonly IListRepository<ProductCategory> _psRepository;
 
-        public ProductSizeController(IListRepository<ProductSize> productSizeRepo)
+        public ProductSizeController(IListRepository<ProductCategory> productSizeRepo)
         {
             _psRepository = productSizeRepo;
         }
@@ -20,7 +20,7 @@ namespace backend.Controllers
         [HttpGet]
         public IActionResult Get()
         {
-            IEnumerable<ProductSize> productSizes = _psRepository.GetAll();
+            IEnumerable<ProductCategory> productSizes = _psRepository.GetAll();
             return Ok(productSizes);
         }
 
@@ -47,7 +47,7 @@ namespace backend.Controllers
         }
 
         [HttpPost]
-        public IActionResult Post(ProductSize newProductSize)
+        public IActionResult Post(ProductCategory newProductSize)
         {
             bool added = _psRepository.Add(newProductSize);
             if (!added)
@@ -59,7 +59,7 @@ namespace backend.Controllers
         }
 
         [HttpPut("{productSizeId}")]
-        public IActionResult Put(ProductSize updatedProductSize)
+        public IActionResult Put(ProductCategory updatedProductSize)
         {
             bool updated = _psRepository.Update(updatedProductSize);
             if (updated)
