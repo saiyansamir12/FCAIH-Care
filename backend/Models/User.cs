@@ -1,5 +1,7 @@
 ﻿using System.Net;
-
+using System.ComponentModel.DataAnnotations;
+using Microsoft.AspNetCore.Cryptography.KeyDerivation;
+using System.Security.Cryptography;
 namespace backend.Models
 {
 
@@ -8,14 +10,21 @@ namespace backend.Models
         public User()
         {
         }
-
+        [Key]
         public int UserID { get; set; }
+        [Required]
         public string Role { get; set; }
+        [Required]
         public string FirstName { get; set; }
+        [Required]
         public string LastName { get; set; }
+        [Required]
         public string Email { get; set; }
         public string Phone { get; set; }
+        [Required]
         public string Password { get; set; }
+
+        public string Salt { get; set; }
 
         public string Address { get; set; }
         public string City { get; set; }
@@ -35,7 +44,21 @@ namespace backend.Models
         }
         public bool CheckPassword(string password)
         {
-            return Password == password; // temporary
+            return Password == HashPassword(password, Salt);
         }
+        private string HashPassword(string password, string salt)
+        {
+            byte[] saltBytes = Convert.FromBase64String(salt);
+            string hashed = Convert.ToBase64String(KeyDerivation.Pbkdf2(
+                password: password,
+                salt: saltBytes,
+                prf: KeyDerivationPrf.HMACSHA1,
+                iterationCount: 10000,
+                numBytesRequested: 256 / 8));
+
+    return hashed;
+}
+
+
     }
 }
