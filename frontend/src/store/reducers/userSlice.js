@@ -3,7 +3,7 @@ import { login } from "../actions/userActions";
 
 const initialState = {
   currentUser: null,
-  token: localStorage.getItem("token") || "",
+  token: sessionStorage.getItem("token") || "",
   isLoading: false,
   error: null,
 };
@@ -13,7 +13,7 @@ export const userSlice = createSlice({
   initialState,
   reducers: {
     logout: (state) => {
-      localStorage.removeItem("token");
+      sessionStorage.removeItem("token");
       state.currentUser = null;
       state.token = "";
     },

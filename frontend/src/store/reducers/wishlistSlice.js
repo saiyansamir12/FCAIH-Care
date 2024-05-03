@@ -4,7 +4,7 @@ const wishlistSlice1 = createSlice({
   name: 'wishlist',
   initialState: {
     items: localStorage.getItem('wishlist')
-      ? JSON.parse(localStorage.getItem('wishlist'))
+      ? JSON.parse(sessionStorage.getItem('wishlist'))
       : [],
   },
   reducers: {
@@ -14,16 +14,16 @@ const wishlistSlice1 = createSlice({
       if (itemIndex === -1) {
         state.items.push(product);
       }
-      localStorage.setItem('wishlist', JSON.stringify(state.items));
+      sessionStorage.setItem('wishlist', JSON.stringify(state.items));
     },
     removeFromWishlist: (state, action) => {
       const product = action.payload;
       state.items = state.items.filter((item) => item.productID !== product.productID);
-      localStorage.setItem('wishlist', JSON.stringify(state.items));
+      sessionStorage.setItem('wishlist', JSON.stringify(state.items));
     },
     clearWishlist: (state) => {
       state.items = [];
-      localStorage.removeItem('wishlist');
+      sessionStorage.removeItem('wishlist');
     },
   },
 });
