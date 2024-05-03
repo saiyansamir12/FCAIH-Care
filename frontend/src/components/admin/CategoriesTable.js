@@ -1,22 +1,22 @@
 import React, { useState } from 'react';
 import { icons } from '../../assets/icons/icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { useSize } from '../../utils/hooks/useSize';
+import { useCategory } from '../../utils/hooks/useCategory';
 
-function ProductSizes({ product }) {
-  const { addSize, updateSize, deleteSize } = useSize();
-  const [newSize, setNewSize] = useState({ size: '', price: '', quantity: '' });
-  const [editedSize, setEditedSize] = useState({}); 
+function ProductCategorys({ product }) {
+  const { addCategory, updateCategory, deleteCategory } = useCategory();
+  const [newCategory, setNewCategory] = useState({ Category: '', price: '', quantity: '' });
+  const [editedCategory, setEditedCategory] = useState({}); 
   
   const handleInputChange = (e, index) => {
     const { name, value } = e.target;
-    const updatedSize = { ...product.sizes[index], [name]: value };
-    setEditedSize(updatedSize);
+    const updatedCategory = { ...product.Categorys[index], [name]: value };
+    setEditedCategory(updatedCategory);
   };    
   
   return (
     <>
-      <table className='size-table'>
+      <table className='Category-table'>
         <thead>
           <tr>
             <th>Category</th>
@@ -28,45 +28,45 @@ function ProductSizes({ product }) {
         <tbody>
           <tr>
             <td>
-              <select id="size" value={newSize.size} onChange={(e) => setNewSize({ ...newSize, size: e.target.value })}>
+              <select id="Category" value={newCategory.Category} onChange={(e) => setNewCategory({ ...newCategory, Category: e.target.value })}>
                 <option disabled value="">Select Category</option>
                 {Array.from({ length: 16 }, (_, i) => i + 35)
-                  .filter((size) => !product?.sizes.find((ps) => ps.size === size))
-                  .map((size, index) => (
-                    <option key={index} value={size}>
-                      {size}
+                  .filter((Category) => !product?.Categorys.find((ps) => ps.Category === Category))
+                  .map((Category, index) => (
+                    <option key={index} value={Category}>
+                      {Category}
                     </option>
                   ))}
               </select>
             </td>
             <td>
-              <input id="price" type="number" value={newSize.price} onChange={(e) =>
-                setNewSize((prevSize) => ({
-                  ...prevSize,
+              <input id="price" type="number" value={newCategory.price} onChange={(e) =>
+                setNewCategory((prevCategory) => ({
+                  ...prevCategory,
                   price: e.target.value,
                 }))
               }/>
             </td>
             <td>
-              <input id="quantity" type="number" value={newSize.quantity} onChange={(e) =>
-                setNewSize((prevSize) => ({
-                  ...prevSize,
+              <input id="quantity" type="number" value={newCategory.quantity} onChange={(e) =>
+                setNewCategory((prevCategory) => ({
+                  ...prevCategory,
                   quantity: e.target.value,
                 }))
               }/>
             </td>
             <td>
-              <button onClick={() => addSize({ ...newSize, productId: product.productID })}>ADD</button>
+              <button onClick={() => addCategory({ ...newCategory, productId: product.productID })}>ADD</button>
             </td>
           </tr>
-          {product?.sizes.map((size, index) => (
+          {product?.Categorys.map((Category, index) => (
             <tr key={index}>
-              <td>{size.size}</td>
+              <td>{Category.Category}</td>
               <td>
               <input
                   name="price"
                   type="number"
-                  value={editedSize?.price ?? size?.price}
+                  value={editedCategory?.price ?? Category?.price}
                   onChange={(e) => handleInputChange(e, index)}
                 />
               </td>
@@ -74,15 +74,15 @@ function ProductSizes({ product }) {
               <input
                   name="quantity"
                   type="number"
-                  value={editedSize?.quantity ?? size?.quantity}
+                  value={editedCategory?.quantity ?? Category?.quantity}
                   onChange={(e) => handleInputChange(e, index)}
                 />
               </td>
               <td>
-                <button onClick={(e) => deleteSize(size.productSizeID, e)}>
+                <button onClick={(e) => deleteCategory(Category.productCategoryID, e)}>
                   <FontAwesomeIcon icon={icons.trash}></FontAwesomeIcon>
                 </button>
-                <button onClick={() => updateSize({ sizeId: size.productSizeID, size: editedSize})}>
+                <button onClick={() => updateCategory({ CategoryId: Category.productCategoryID, Category: editedCategory})}>
                   <FontAwesomeIcon icon={icons.save}></FontAwesomeIcon>
                 </button>
               </td>
@@ -94,4 +94,4 @@ function ProductSizes({ product }) {
   );
 }
 
-export default ProductSizes;
+export default ProductCategorys;

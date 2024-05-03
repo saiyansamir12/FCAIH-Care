@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import ProductSizes from './CategoriesTable';
+import ProductCategorys from './CategoriesTable';
 import { useProduct } from '../../utils/hooks/useProduct';
 import { useStock } from '../../utils/hooks/useUtil';
 
@@ -10,9 +10,9 @@ function Products() {
   const getStock = useStock();
   const product = products.find((product) => product?.productID === localProduct?.productID);
 
-  useEffect(() => {
-    fetchProducts();
-  }, [products])
+    useEffect(() => {
+        fetchProducts();
+    }, [])
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -71,7 +71,7 @@ function Products() {
                 { product?.productID && (<button onClick={() => updateExistingProduct({ productId: product?.productID, product: localProduct })}>SAVE CHANGES</button>)}
                 { !product?.productID && (<button onClick={() => createProduct(localProduct)}>Add Product</button>)}
             </div>
-            {product && (<ProductSizes product={product} />)}
+            {product && (<ProductCategorys product={product} />)}
         </div> 
     </div>
   );

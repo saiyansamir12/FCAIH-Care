@@ -38,6 +38,7 @@ namespace backend.DTL
             modelBuilder.Entity<ProductCategory>(entity =>
             {
                 entity.ToTable("ProductCategorys");
+                entity.Property(p => p.Price).HasPrecision(18, 2); // Add this line
             });
 
             modelBuilder.Entity<OrderItem>(entity =>
@@ -48,6 +49,8 @@ namespace backend.DTL
             modelBuilder.Entity<Order>(entity =>
             {
                 entity.ToTable("Orders");
+                entity.Property(o => o.TotalPrice).HasPrecision(18, 2); // Add this line
+
             });
         }
     }

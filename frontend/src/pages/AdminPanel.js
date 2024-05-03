@@ -2,8 +2,8 @@ import React, { useState } from 'react';
 import Users from '../components/admin/UsersTable';
 import Orders from '../components/admin/OrdersTable';
 import Products from '../components/admin/ProductsTable';
-
-const tabs = ['Products', 'Orders', 'Users',];
+import Categories from '../components/admin/CategoriesList';
+const tabs = ['Products', 'Orders', 'Users', 'Categories'];
 
 function AdminPanel() {
   const [activeTab, setActiveTab] = useState(0);
@@ -27,7 +27,8 @@ function AdminPanel() {
       </ul>
       {activeTab === 0 && <Products />}
       {activeTab === 1 && <Orders />}
-      {activeTab === 2 && <Users />}
+          {activeTab === 2 && <Users />}
+          {activeTab === 3 && <Categories /> }
     </div>
   );
 }

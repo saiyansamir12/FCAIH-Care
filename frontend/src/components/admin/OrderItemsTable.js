@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import orderItemApi from '../../utils/api/orderItemApi';
-import sizeApi from '../../utils/api/sizeApi';
+import categoryApi from '../../utils/api/CategoryApi';
 import { Link } from 'react-router-dom';
 import { useProduct } from "../../utils/hooks/useProduct"
 import { formatPrice } from '../../utils/hooks/useUtil';
@@ -8,7 +8,7 @@ import { formatPrice } from '../../utils/hooks/useUtil';
 
 function OrderItemsTable({ selectedOrder }) {
   const [orderItems, setOrderItems] = useState([]);
-  const [productSizes, setProductSizes] = useState([]);
+    const [ProductCategorys, setProductCategorys] = useState([]);
   const { products }= useProduct();
 
   useEffect(() => {
@@ -16,11 +16,11 @@ function OrderItemsTable({ selectedOrder }) {
       orderItemApi.getOrderItemsByOrderId(selectedOrder.orderID).then((orderItems) => {
         setOrderItems(orderItems);
 
-        const productSizePromises = orderItems.map((orderItem) =>
-        sizeApi.getProductSize(orderItem.productSizeID)
+          const ProductCategoryPromises = orderItems.map((orderItem) =>
+            categoryApi.getProductCategory(orderItem.productCategoryID)
         );
-        Promise.all(productSizePromises).then((productSizes) => {
-          setProductSizes(productSizes);
+          Promise.all(ProductCategoryPromises).then((ProductCategorys) => {
+              setProductCategorys(ProductCategorys);
         });
         
       });
@@ -41,14 +41,14 @@ function OrderItemsTable({ selectedOrder }) {
               {products[index] && (
                 <Link to={`/${products[index].productID}`}><p>{products[index].brand} {products[index].name}</p></Link>
               )}
-              {productSizes[index] && (
-                <p>Size: {productSizes[index].size}</p>
+                      {ProductCategorys[index] && (
+                          <p>Category: {ProductCategorys[index].category}</p>
               )}
               <p>Quantity: {orderItem.quantity}</p>
             </div>
-            {productSizes[index] && (
+                  {ProductCategorys[index] && (
               <div className="cart-item-price">
-                <p>{formatPrice(productSizes[index].price)}</p>
+                          <p>{formatPrice(ProductCategorys[index].price)}</p>
               </div>
             )}
           </div>

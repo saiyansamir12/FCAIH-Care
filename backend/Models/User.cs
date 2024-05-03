@@ -21,7 +21,7 @@ namespace backend.Models
         public string City { get; set; }
         public string PostalCode { get; set; }
 
-        public User(int userId, string firstName, string lastName, string email, string phone, string password, string address = null, string city = null, string postalCode = null)
+        public User(int userId, string firstName, string lastName, string email, string phone, string password, string address, string city, string postalCode)
         {
             UserID = userId;
             FirstName = firstName;

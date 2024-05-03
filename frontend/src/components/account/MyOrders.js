@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import { fetchOrdersByUserId } from '../../store/actions/orderActions';
 import orderItemApi from '../../utils/api/orderItemApi';
-import sizeApi from '../../utils/api/sizeApi';
+import CategoryApi from '../../utils/api/CategoryApi';
 import productApi from '../../utils/api/productApi';
 import { useStatusString, formatPrice, formatDateTime } from '../../utils/hooks/useUtil';
 
@@ -18,12 +18,12 @@ function MyOrders({ currentUser }) {
         const orderItems = await orderItemApi.getOrderItemsByOrderId(order.orderID);
 
         const productSizePromises = orderItems.map((orderItem) =>
-          sizeApi.getProductSize(orderItem.productSizeID)
+          CategoryApi.getProductCategory(orderItem.productCategoryID)
         );
-        const productSizes = await Promise.all(productSizePromises);
+        const productCategorys = await Promise.all(productSizePromises);
 
-        const productPromises = productSizes.map((productSize) =>
-          productApi.getProduct(productSize.productID)
+          const productPromises = productCategorys.map((productCategory) =>
+              productApi.getProduct(productCategorys.productID)
         );
         const products = await Promise.all(productPromises);
 
@@ -31,7 +31,7 @@ function MyOrders({ currentUser }) {
           ...order,
           orderItems: orderItems.map((orderItem, index) => ({
             ...orderItem,
-            productSize: productSizes[index],
+              productSize: productCategorys[index],
             product: products[index]
           })),
           index
@@ -69,7 +69,7 @@ function MyOrders({ currentUser }) {
                   <div className="cart-item-about">
                     <div className="cart-item-details">
                       <p>{orderItem.product.brand} {orderItem.product.name}</p>
-                      <p>Size: {orderItem.productSize.size}</p>
+                                <p>Category: {orderItem.productCategory.cataegory}</p>
                       <p>Quantity: {orderItem.quantity}</p>
                       <p>Price: {formatPrice(orderItem.productSize.price)}</p>
                     </div>

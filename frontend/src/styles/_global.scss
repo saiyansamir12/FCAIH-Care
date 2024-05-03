@@ -112,19 +112,19 @@ table{
 th, td {
     padding:15px;
 }
-tr{
-    th{
-      font-size: 0.8rem;
-      font-weight: lighter;
-      background: $color-dark;
-      text-align: left;
-      color: white;
-
+tr {
+    th {
+        font-size: 0.8rem;
+        font-weight: lighter;
+        background: #98d648;
+        text-align: left;
+        color: white;
     }
-    &:nth-child(2n){
+
+    &:nth-child(2n) {
         background: $color-smoke;
     }
-  }
+}
   td{
     font-size: 0.8rem;
     white-space: nowrap;

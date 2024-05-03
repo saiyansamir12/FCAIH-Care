@@ -1,12 +1,16 @@
 import React, { useState } from 'react';
+import { useLocation } from 'react-router-dom';
 import Register from "../components/auth/RegisterForm";
 import Login from "../components/auth/LoginForm";
 
 function Authentication() {
   const [activeTab, setActiveTab] = useState('login');
+  const location = useLocation();
+  const [message, setMessage] = useState(location.state?.message);
 
   return (
-    <div className='auth container'>
+      <div className='auth container'>
+          {message && <div className="success-message">{message}</div>}
       <div className='auth-container'>
         {activeTab === 'login' && <Login />}
         {activeTab === 'signup' && <Register />}

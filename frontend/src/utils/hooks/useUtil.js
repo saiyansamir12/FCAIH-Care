@@ -40,7 +40,7 @@ export default function useToggle(initialValue = false) {
 }
 
 export function formatPrice(price) {
-  return price.toLocaleString('da-DK', { style: 'currency', currency: 'DKK' });
+  return price.toLocaleString('eg-EG', { style: 'currency', currency: 'EGP' });
 }
 
 export function formatDate(date) {

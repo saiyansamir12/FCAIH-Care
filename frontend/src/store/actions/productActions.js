@@ -1,28 +1,28 @@
 
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import productApi from '../../utils/api/productApi';
-import sizeApi from '../../utils/api/sizeApi';
+import categoryApi from '../../utils/api/CategoryApi';
 
 export const fetchProducts = createAsyncThunk(
   'products/fetchProducts',
   async () => {
     const products = await productApi.getProducts();
-    const productSizes = await sizeApi.getProductSizes();
-    const productSizesMap = productSizes.reduce((map, size) => {
-      if (!map[size.productID]) {
-        map[size.productID] = [];
+      const productCategorys = await categoryApi.getProductCategorys();
+      const ProductCategoriesMap = productCategorys.reduce((map, Category) => {
+      if (!map[Category.productID]) {
+        map[Category.productID] = [];
       }
-      map[size.productID].push(size);
+      map[Category.productID].push(Category);
       return map;
     }, {});
-    const productsWithSizes = products.map(product => {
+    const productsWithCategorys = products.map(product => {
       const { productID } = product;
-      const sizes = productSizesMap[productID] || [];
-      const minPrice = Math.min(...sizes.map(({ price }) => price));
-      const inStock = sizes.length > 0;
-      return { ...product, sizes, defaultPrice: minPrice, inStock };
+        const categories = ProductCategoriesMap[productID] || [];
+        const minPrice = Math.min(...categories.map(({ price }) => price));
+        const inStock = categories.length > 0;
+        return { ...product, categories, defaultPrice: minPrice, inStock };
     });
-    return productsWithSizes;
+    return productsWithCategorys;
   }
 );
 
