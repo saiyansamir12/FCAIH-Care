@@ -3,7 +3,7 @@ import { addToWishlist, clearWishlist, removeFromWishlist } from '../../store/re
 
 export const useWishlist = () => {
   const dispatch = useDispatch();
-  const wishlistItems = useSelector(state => state.wishlist && state.wishlist.items);
+    const wishlistItems = useSelector(state => state.wishlist && state.wishlist.items) || [];
   const wishlistCount = wishlistItems.length;
   
   const toggleWishlistItemHandler = (product) => {

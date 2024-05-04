@@ -1,15 +1,19 @@
 import { useEffect } from 'react';
-import { useDispatch } from 'react-redux';
-import { deleteCategory, addCategory, updateCategory } from '../../store/actions/CategoryActions';
+import { useDispatch, useSelector } from 'react-redux';
+import { deleteCategory, addCategory, updateCategory, fetchProductCategorys } from '../../store/actions/CategoryActions';
 
 export const useCategory = () => {
-  const dispatch = useDispatch();
-
-  useEffect(() => {
+    const dispatch = useDispatch();
+    const categorys = useSelector(state => state.productCategorys ? state.productCategorys.productCategorys : []);
+    useEffect(() => {
   }, []);
 
-  const addCategoryHandler = ({ Category, price, quantity, productId }, e) => {
-    dispatch(addCategory({ Category, price, quantity, productId }))
+    const fetchCategorysHandler = () => {
+        dispatch(fetchProductCategorys());
+  }
+
+  const addCategoryHandler = ({ Category, productId }, e) => {
+    dispatch(addCategory({ Category, productId }))
   };
 
   const updateCategoryHandler = ({ CategoryId, Category }) => {
@@ -29,7 +33,9 @@ export const useCategory = () => {
   return { 
     addCategory: addCategoryHandler,
     updateCategory: updateCategoryHandler,
-    deleteCategory: deleteCategoryHandler, 
+      deleteCategory: deleteCategoryHandler, 
+      fetchCategorys: fetchCategorysHandler,
+      categorys
   };
 };
 

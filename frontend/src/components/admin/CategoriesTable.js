@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { useSelector } from 'react-redux';
 import { icons } from '../../assets/icons/icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useCategory } from '../../utils/hooks/useCategory';
@@ -7,7 +8,8 @@ function ProductCategorys({ product }) {
   const { addCategory, updateCategory, deleteCategory } = useCategory();
   const [newCategory, setNewCategory] = useState({ Category: '', price: '', quantity: '' });
   const [editedCategory, setEditedCategory] = useState({}); 
-  
+    const categories = useSelector(state => state.categories);
+
   const handleInputChange = (e, index) => {
     const { name, value } = e.target;
     const updatedCategory = { ...product.Categorys[index], [name]: value };
@@ -30,13 +32,13 @@ function ProductCategorys({ product }) {
             <td>
               <select id="Category" value={newCategory.Category} onChange={(e) => setNewCategory({ ...newCategory, Category: e.target.value })}>
                 <option disabled value="">Select Category</option>
-                {Array.from({ length: 16 }, (_, i) => i + 35)
-                  .filter((Category) => !product?.Categorys.find((ps) => ps.Category === Category))
-                  .map((Category, index) => (
-                    <option key={index} value={Category}>
-                      {Category}
-                    </option>
-                  ))}
+                              {categories
+                                  .filter((Category) => !(product?.Categorys || []).find((ps) => ps.Category === Category))
+                                  .map((Category, index) => (
+                                      <option key={index} value={Category}>
+                                          {Category}
+                                      </option>
+                                  ))}
               </select>
             </td>
             <td>
@@ -59,8 +61,8 @@ function ProductCategorys({ product }) {
               <button onClick={() => addCategory({ ...newCategory, productId: product.productID })}>ADD</button>
             </td>
           </tr>
-          {product?.Categorys.map((Category, index) => (
-            <tr key={index}>
+                  {(product?.Categorys || []).map((Category, index) => (
+                      <tr key={index}>
               <td>{Category.Category}</td>
               <td>
               <input

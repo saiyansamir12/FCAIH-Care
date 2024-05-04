@@ -8,23 +8,22 @@ export const fetchProducts = createAsyncThunk(
     async (_, { rejectWithValue }) => {
         try {
             const products = await productApi.getProducts();
-            const productCategorys = await categoryApi.getProductCategorys();
-            console.log(productCategorys)
-            const ProductCategoriesMap = productCategorys.reduce((map, category) => {
+            const productCategories = await categoryApi.getProductCategorys();
+            const productCategoriesMap = productCategories.reduce((map, category) => {
                 if (!map[category.ProductID]) {
                     map[category.ProductID] = [];
                 }
-                map[category.productID].push(category);
+                map[category.ProductID].push(category);
                 return map;
             }, {});
-            const productsWithCategorys = products.map(product => {
-                const { productID } = product;
-                const categories = ProductCategoriesMap[productID] || [];
-                const minPrice = Math.min(...categories.map(({ price }) => price));
+            const productsWithCategories = products.map(product => {
+                const { ProductID } = product;
+                const categories = productCategoriesMap[ProductID] || [];
+                const minPrice = Math.min(...categories.map(({ Price }) => Price));
                 const inStock = categories.length > 0;
                 return { ...product, categories, defaultPrice: minPrice, inStock };
             });
-            return productsWithCategorys;
+            return productsWithCategories;
         } catch (error) {
             return rejectWithValue(error.message);
         }

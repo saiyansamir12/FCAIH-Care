@@ -7,7 +7,7 @@ function Users() {
 
     useEffect(() => {
         const fetchData = async () => {
-            const categories = await CategoryApi.getProductCategories();
+            const categories = await CategoryApi.getProductCategorys();
             setData(categories);
         };
         fetchData();

@@ -1,24 +1,38 @@
 import React, { useEffect, useState } from 'react';
-import ProductCategorys from './CategoriesTable';
 import { useProduct } from '../../utils/hooks/useProduct';
+import { useCategory } from '../../utils/hooks/useCategory';
 import { useStock } from '../../utils/hooks/useUtil';
+import CategoryApi from '../../utils/api/CategoryApi';
+import { useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 
 
 function Products() {
-  const { products, fetchProducts, createProduct, updateExistingProduct, removeProduct } = useProduct();
-  const [localProduct, setLocalProduct] = useState({});
+    const { products, fetchProducts, createProduct, updateExistingProduct, removeProduct } = useProduct();
+    const { categorys, fetchCategorys, addCategory, updateCategory, deleteCategory } = useCategory(); }
+    const [localProduct, setLocalProduct] = useState({});
+    const [categorys, setCategorys] = useState([]);
   const getStock = useStock();
   const product = products.find((product) => product?.productID === localProduct?.productID);
 
     useEffect(() => {
         fetchProducts();
-        console.log(products)
+        const fetchData = async () => {
+            const categorys = await CategoryApi.getProductCategorys();
+            setCategorys(categorys);
+        };
+        fetchData();
     }, [products])
 
-  const handleInputChange = (e) => {
-    const { name, value } = e.target;
-    setLocalProduct(prevState => ({ ...prevState, [name]: value }));
-  };  
+    const handleInputChange = (e) => {
+        const { name, value } = e.target;
+        if (name === 'category') {
+            const selectedCategory = categorys.find(cat => cat.id === value);
+            setLocalProduct(prevState => ({ ...prevState, ProductCategoryID: selectedCategory.id }));
+        } else {
+            setLocalProduct(prevState => ({ ...prevState, [name]: value }));
+        }
+    };
 
   return (
     <div className="admin-product">
@@ -65,14 +79,20 @@ function Products() {
             <label>
                 Image URL
                 <input id="productImageURL" name="imageURL" maxLength="100" value={localProduct?.imageURL || ''} onChange={handleInputChange}/>
-            </label>
+              </label>
+              <label>
+                  Category
+                  <select name="category" value={localProduct?.category || ''} onChange={handleInputChange}>
+                      {categorys.map((cat, index) => (
+                          <option key={index} value={cat.id}>{cat.category}</option>
+                      ))}
+                  </select>
+              </label>
             <div className='divider'>
                 <button className='second-button' onClick={() => setLocalProduct(null) }>CLEAR</button>
                 { product && (<button className='second-button' onClick={() => removeProduct(product?.productID)}>DELETE</button>)}
-                { product?.productID && (<button onClick={() => updateExistingProduct({ productId: product?.productID, product: localProduct })}>SAVE CHANGES</button>)}
-                { !product?.productID && (<button onClick={() => createProduct(localProduct)}>Add Product</button>)}
-            </div>
-            {product && (<ProductCategorys product={product} />)}
+                  {product?.productID && (<button onClick={() => updateExistingProduct({ productId: product?.productID, product: localProduct })}>SAVE CHANGES</button>)}
+                  {!product?.productID && (<button onClick={() => createProduct(localProduct)}>Add Product</button>)}            </div>
         </div> 
     </div>
   );
