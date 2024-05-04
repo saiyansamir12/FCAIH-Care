@@ -13,3 +13,13 @@ export const fetchOrdersByUserId = createAsyncThunk('products/fetchProductById',
   const orders = await orderApi.getOrdersByUserId(userId);
   return orders;
 });
+
+export const updateOrder = createAsyncThunk('orders/updateOrder', async ({ orderId, order }) => {
+    const updatedOrder = await orderApi.updateOrder(orderId, order);
+    return updatedOrder;
+});
+
+export const deleteOrder = createAsyncThunk('orders/deleteOrder', async (orderId) => {
+    const deletedOrder = await orderApi.deleteOrder(orderId);
+    return deletedOrder;
+});

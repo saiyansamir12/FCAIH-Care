@@ -1,5 +1,5 @@
 import React, { useEffect, useRef } from 'react';
-import hero from "../assets/icons/hero2.png"
+import { useCategory } from '../utils/hooks/useCategory';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import 'swiper/swiper-bundle.css';
 import { Navigation } from 'swiper/modules';
@@ -8,6 +8,7 @@ import drugsOffer from '../assets/img/drugs_offer.jpg';
 import beautyproducts from '../assets/img/Beauty_Products_offer.jpg';
 
 function Home() {
+    const { fetchCategorys, categorys } = useCategory();
     const swiperContainerRef = useRef(null);
     const nextElRef = useRef(null);
     const prevElRef = useRef(null);
@@ -34,6 +35,10 @@ function Home() {
             };
         }
     }, []);
+
+    useEffect(() => {
+        fetchCategorys();
+    }, [fetchCategorys]);
   return (
     <>
           <div className='hero'>
@@ -46,11 +51,9 @@ function Home() {
                               <h3>Categories</h3>
                           </div>
                           <ul className="sf-menu sf-js-enabled sf-arrows">
-                              <li><a href="/shop">Baby & Child Care</a></li>
-                              <li><a href="#">Beauty</a></li>
-                              <li><a href="#">Health</a></li>
-                              <li><a href="#">Medicines</a></li>
-                              <li><a href="#">Personal Care</a></li>
+                              {categorys.map((category, index) => (
+                                  <li key={index}><a href={`/shop/${category.productCategoryID}`}>{category.category}</a></li>
+                              ))}
                           </ul>
                       </div>
                   </div>

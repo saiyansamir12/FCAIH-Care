@@ -1,8 +1,16 @@
 import userApi from '../../utils/api/userApi';
 import React, { useEffect, useState } from 'react';
+import { useUser } from '../../utils/hooks/useUser';
 
 function Users() {
-  const [data, setData] = useState([]);
+    const [data, setData] = useState([]);
+    const { deleteUser: deleteUserHandler } = useUser();
+    const handleDelete = async (userId) => {
+        await deleteUserHandler(userId);
+        // Refresh the data after deleting a user
+        const users = await userApi.getUsers();
+        setData(users);
+    };
 
   useEffect(() => {
     const fetchData = async () => {
@@ -30,7 +38,10 @@ function Users() {
             <td>{user.firstName} {user.lastName}</td>
             <td>{user.email}</td>
             <td>{user.phone}</td>
-            <td>{user.postalCode} {user.city} {user.address}</td>
+                <td>{user.postalCode} {user.city} {user.address}</td>
+                <td>
+                    <button onClick={() => handleDelete(user.userID)}>Delete</button>
+              </td>
           </tr>
         ))}
       </tbody>

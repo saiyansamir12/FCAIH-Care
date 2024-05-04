@@ -59,8 +59,9 @@ namespace backend.Controllers
         }
 
         [HttpPut("{userId}")]
-        public IActionResult Put(User updatedUser)
+        public IActionResult Put(int userId, User updatedUser)
         {
+            updatedUser.UserID = userId;
             bool updated = _userRepository.Update(updatedUser);
             if (updated)
             {

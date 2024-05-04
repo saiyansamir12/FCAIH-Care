@@ -1,8 +1,8 @@
 import CategoryApi from '../../utils/api/CategoryApi';
 import { createAsyncThunk } from '@reduxjs/toolkit';
 
-export const fetchProductCategorys = createAsyncThunk( 'ProductCategorys/fetchProductCategorys', async () => {
-    const ProductCategorys = await CategoryApi.getProductCategorys();
+export const fetchCategorys = createAsyncThunk( 'ProductCategorys/fetchCategorys', async () => {
+    const ProductCategorys = await CategoryApi.getCategorys();
     return ProductCategorys;
     }
   );
@@ -13,8 +13,8 @@ export const fetchProductCategorys = createAsyncThunk( 'ProductCategorys/fetchPr
     }
   );
   
-  export const addCategory = createAsyncThunk('ProductCategorys/addCategory', async ({ category, price, quantity, productId }) => {
-      const newCategory = { category, price, quantity, productId };
+  export const addCategory = createAsyncThunk('ProductCategorys/addCategory', async ({ category }) => {
+      const newCategory = { category };
       const createdProductCategory = await CategoryApi.addProductCategory(newCategory);
       return createdProductCategory;
     }

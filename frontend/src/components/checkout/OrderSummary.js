@@ -10,7 +10,7 @@ function OrderSummary({ onPaymentComplete }) {
     };
     const { subtotal, delivery, discount, defaultTotal, clearCart, items } = useCart();
     const { currentUser } = useUser();
-
+    console.log(currentUser);
     const onApprove = async () => {
         const order = {
             items: items,
@@ -23,7 +23,7 @@ function OrderSummary({ onPaymentComplete }) {
         const newOrder = await orderApi.createOrder({
             DateTime: new Date().toISOString(),
             TotalPrice: defaultTotal,
-            Status: 'Pending',
+            Status: 0,
             UserID: currentUser.userID
         });
         console.log('Order details:', newOrder);

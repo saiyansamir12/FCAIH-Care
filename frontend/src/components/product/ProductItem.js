@@ -8,7 +8,6 @@ import { formatPrice } from '../../utils/hooks/useUtil';
 function ProductCard({ product, index }) {
     const { wishlistItems, toggleWishlistItem } = useWishlist();
     const itemExists = wishlistItems.find((item) => item.productID === product.productID);
-
     return (
         <>
             {product.inStock &&
@@ -23,7 +22,7 @@ function ProductCard({ product, index }) {
                     <div className='product-info'>
                         <Link to={`/${product.productID}`}>
                             <h3>{product.name}</h3>
-                            <p> {formatPrice(product.defaultPrice)}</p>
+                            <p> {formatPrice(product.price)}</p>
                         </Link>
                     </div>
                 </div>

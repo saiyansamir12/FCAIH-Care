@@ -1,36 +1,34 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { fetchProductCategorys, addCategory } from '../actions/CategoryActions';
+import { fetchCategorys } from '../actions/CategoryActions';
 
 const initialState = {
-  productCategorys: [],
+    categorys: [],
+    status: 'idle',
   loading: 'idle',
   error: null
 };
 
-export const productCategorySlice = createSlice({
-  name: 'productCategorys',
+export const CategorySlice = createSlice({
+  name: 'categorys',
   initialState,
   reducers: {
   },
   extraReducers: (builder) => {
     builder
-      .addCase(fetchProductCategorys.pending, (state) => {
+        .addCase(fetchCategorys.pending, (state) => {
         state.loading = 'pending';
       })
-      .addCase(fetchProductCategorys.fulfilled, (state, action) => {
-        const { productId, productCategorys } = action.payload;
-        if (productId === state.productId) {
-          state.loading = 'idle';
-          state.productCategorys = productCategorys;
-        }
-      })
-      .addCase(fetchProductCategorys.rejected, (state, action) => {
+        .addCase(fetchCategorys.fulfilled, (state, action) => {
+            state.loading = 'idle';
+            state.categorys = action.payload;
+        })
+        .addCase(fetchCategorys.rejected, (state, action) => {
         state.loading = 'idle';
         state.error = action.error.message;
       })
   }
 });
 
-export const {  } = productCategorySlice.actions;
+export const {  } = CategorySlice.actions;
 
-export default productCategorySlice.reducer;
+export default CategorySlice.reducer;

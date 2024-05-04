@@ -9,7 +9,7 @@ const initialState = {
   filter: {
     minPrice: null,
     maxPrice: null,
-    sizes: [],
+    categorys: [],
   },
 };
 
@@ -19,11 +19,11 @@ const productSlice = createSlice({
   initialState,
   reducers: {
     filterProducts: (state, action) => {
-      const { minPrice, maxPrice, sizes } = action.payload;
+          const { minPrice, maxPrice, categorys } = action.payload;
       state.products = state.products.filter(product => {
         const isInPriceRange = (minPrice === null || product.defaultPrice >= minPrice) && (maxPrice === null || product.defaultPrice <= maxPrice);
-        const hasSize = sizes.length === 0 || product.sizes.some(size => sizes.includes(size));
-        return isInPriceRange && hasSize;
+          const hasCategory = categorys.length === 0 || product.categorys.some(category => categorys.includes(category));
+          return isInPriceRange && hasCategory;
       });
     },   
     searchProducts: (state, action) => {

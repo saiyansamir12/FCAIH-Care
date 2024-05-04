@@ -20,7 +20,11 @@ const createUser = async (user) => {
 }
 
 const updateUser = async (userId, user) => {
-  const response = await axios.put(`${API_URL}/${userId}`, user);
+    const response = await axios.put(`${API_URL}/${userId}`, user, {
+        headers: {
+            'Content-Type': 'application/json'
+        }
+    });
   return response.data;
 }
 

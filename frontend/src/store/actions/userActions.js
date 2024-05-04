@@ -7,14 +7,24 @@ export const getUsers = createAsyncThunk("user/login", async () => {
 
 });
 
+export const updateUser = createAsyncThunk("user/update", async ({ userId, user }) => {
+    const updatedUser = await userApi.updateUser(userId, user);
+    return updatedUser;
+});
+
 export const getUser = createAsyncThunk("user/login", async (userId) => {
     const user = await userApi.getUser(userId);
     return user;
   
-  });
+});
+
+export const deleteUser = createAsyncThunk("user/login", async (userId) => {
+    const user = await userApi.deleteUser(userId);
+    return user;
+  
+});
   
 export const login = createAsyncThunk("user/login", async (loginData) => {
-  console.log("in slice", loginData)
     const userId = await userApi.login(loginData);
     console.log("in slice userid", userId)
     return userId;

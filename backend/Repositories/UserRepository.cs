@@ -39,18 +39,32 @@ namespace backend.Repositories
             }
         }
 
-        public bool Update(User user)
+        public bool Update(User updatedUser)
         {
-            try
+            var user = _context.Users.Find(updatedUser.UserID);
+            if (user != null)
             {
-                _context.Entry(user).State = EntityState.Modified;
-                _context.SaveChanges();
-                return true;
+                user.Role = updatedUser.Role;
+                user.FirstName = updatedUser.FirstName;
+                user.LastName = updatedUser.LastName;
+                user.Email = updatedUser.Email;
+                user.Phone = updatedUser.Phone;
+                user.Password = updatedUser.Password;
+                user.Address = updatedUser.Address;
+                user.City = updatedUser.City;
+                user.PostalCode = updatedUser.PostalCode;
+
+                try
+                {
+                    _context.SaveChanges();
+                    return true;
+                }
+                catch (Exception)
+                {
+                    return false;
+                }
             }
-            catch (Exception)
-            {
-                return false;
-            }
+            return false;
         }
 
         public bool Delete(int userId)

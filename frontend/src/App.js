@@ -12,6 +12,7 @@ import Admin from "./pages/AdminPanel"
 import Account from './pages/Account';
 import Authentication from './pages/Authentication';
 import Wishlist from './pages/Wishlist';
+import ProductList from './components/product/ProductList';
 
 import { Routes, Route, useLocation } from 'react-router-dom';
 
@@ -33,6 +34,7 @@ function App() {
         <Route path="/account" element={<Account />} />
         <Route path="/shop" element={<Shop />} />
         <Route path="/wishlist" element={<Wishlist />} />
+       <Route path="/shop/:productCategoryID?" element={<ProductList />} />
       </Routes>
       {showHeaderFooter && <Footer />}
     </>

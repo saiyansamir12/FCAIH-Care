@@ -15,24 +15,24 @@ const cartSlice = createSlice({
   },
   reducers: {
     addToCart: (state, action) => {
-      const { product, size, quantity = 1, price } = action.payload;
-      const existingItem = state.items.find(item => item.product.id === product.id && item.size === size);
+          const { product, category, quantity = 1, price } = action.payload;
+          const existingItem = state.items.find(item => item.product.id === product.id && item.category === category && item.product.price === product.price);
       if (existingItem) {
         existingItem.quantity += quantity;
       } else {
-        state.items.push({ product, size, quantity, price });
+        state.items.push({ product, category, quantity, price });
       }
       sessionStorage.setItem('cartItems', JSON.stringify(state.items));
     },
     
     removeFromCart: (state, action) => {
-      const { product, size } = action.payload; 
-      state.items = state.items.filter(item => item.product.id !== product.id || item.size !== size); 
+        const { product, category } = action.payload; 
+        state.items = state.items.filter(item => item.product.id !== product.id || item.category !== category); 
       sessionStorage.setItem('cartItems', JSON.stringify(state.items));
     },
     updateQuantity: (state, action) => {
-      const { productId, size, quantity } = action.payload;
-      const cartItemIndex = state.items.findIndex(item => item.product.id === productId && item.size === size);
+        const { productId, category, quantity } = action.payload;
+        const cartItemIndex = state.items.findIndex(item => item.product.id === productId && item.category === category);
       if (cartItemIndex !== -1) { 
         state.items[cartItemIndex].quantity = quantity;
         sessionStorage.setItem('cartItems', JSON.stringify(state.items));
@@ -43,7 +43,7 @@ const cartSlice = createSlice({
       sessionStorage.removeItem('cartItems');
     },
     calculateSubtotal: (state, action) => {
-      const subtotal = state.items.reduce((acc, item) => acc + (item.price * item.quantity), 0);
+      const subtotal = state.items.reduce((acc, item) => acc + (item.product.price * item.quantity), 0);
       
       if (subtotal >= DELIVERY_THRESHOLD) {
         state.delivery = 0;

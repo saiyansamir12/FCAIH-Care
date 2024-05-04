@@ -35,7 +35,7 @@ namespace backend.Controllers
             return Ok(productCategorys);
         }
 
-        [HttpGet("{id}/size")]
+        [HttpGet("{id}/category")]
         public IActionResult GetproductCategoryById(int id)
         {
             var productCategorys = _psRepository.GetObjById(id);

@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { getUsers, getUser, login } from "../../store/actions/userActions";
+import { getUsers, getUser, login, updateUser, deleteUser } from "../../store/actions/userActions";
 import { selectCurrentUser, selectError, selectIsLoading, selectToken, setUser } from "../../store/reducers/userSlice";
 
 export const useUser = () => {
@@ -12,11 +12,19 @@ export const useUser = () => {
 
   const getUsersHandler = async () => {
     await dispatch(getUsers());
-  };
+    };
+
+    const updateUserHandler = async (userId) => {
+        await dispatch(updateUser(userId));
+        }
 
   const getUserHandler = async (userId) => {
     await dispatch(getUser(userId));
-  };
+    };
+
+    const deleteUserHandler = async (userId) => {
+      await dispatch(deleteUser(userId));
+  }
 
   const loginHandler = async (loginData) => {
     const { payload: userId } = await dispatch(login(loginData));
@@ -35,7 +43,9 @@ export const useUser = () => {
   return { 
     getUsers: getUsersHandler, 
     getUser: getUserHandler, 
-    login: loginHandler, 
+      login: loginHandler,
+      deleteUser: deleteUserHandler,
+      updateUser: updateUserHandler,
     // logout: logoutHandler,
     token, 
     currentUser, 

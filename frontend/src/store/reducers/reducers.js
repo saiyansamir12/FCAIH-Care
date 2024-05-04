@@ -8,7 +8,7 @@ import wishlistReducer from "./wishlistSlice"
 const rootReducer = combineReducers({
   cart: cartReducer,
   product: productReducer,
-  productCategory: categoryReducer,
+  categorys: categoryReducer,
   user: userReducer,
   wishlist: wishlistReducer,
 });

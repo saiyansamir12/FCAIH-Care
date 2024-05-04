@@ -2,56 +2,60 @@ import React, { useEffect, useState } from 'react';
 import { useProduct } from '../../utils/hooks/useProduct';
 import { useCategory } from '../../utils/hooks/useCategory';
 import { useStock } from '../../utils/hooks/useUtil';
-import CategoryApi from '../../utils/api/CategoryApi';
-import { useSelector } from 'react-redux';
-import { useDispatch } from 'react-redux';
 
 
 function Products() {
     const { products, fetchProducts, createProduct, updateExistingProduct, removeProduct } = useProduct();
-    const { categorys, fetchCategorys, addCategory, updateCategory, deleteCategory } = useCategory(); }
+    const { categorys, fetchCategorys } = useCategory();
     const [localProduct, setLocalProduct] = useState({});
-    const [categorys, setCategorys] = useState([]);
-  const getStock = useStock();
-  const product = products.find((product) => product?.productID === localProduct?.productID);
+    const getStock = useStock();
+    const product = products.find((product) => product?.productID === localProduct?.productID);
 
     useEffect(() => {
         fetchProducts();
-        const fetchData = async () => {
-            const categorys = await CategoryApi.getProductCategorys();
-            setCategorys(categorys);
-        };
-        fetchData();
-    }, [products])
+        fetchCategorys();
+    }, [])
+    useEffect(() => {
+        console.log(categorys);
+    }, [categorys])
 
+    useEffect(() => {
+        console.log(products);
+    }, [products])
+        
     const handleInputChange = (e) => {
         const { name, value } = e.target;
         if (name === 'category') {
-            const selectedCategory = categorys.find(cat => cat.id === value);
-            setLocalProduct(prevState => ({ ...prevState, ProductCategoryID: selectedCategory.id }));
+            const selectedCategory = categorys.find(cat => cat.ProductCategoryID);
+            if (selectedCategory) {
+                setLocalProduct(prevState => ({ ...prevState, ProductCategoryID: selectedCategory.ProductCategoryID }));
+            }
         } else {
             setLocalProduct(prevState => ({ ...prevState, [name]: value }));
         }
     };
-
   return (
     <div className="admin-product">
         <table className='product-table'>
             <thead>
                 <tr>
                   <th>ID</th>
-                  <th>Name</th>
-                  <th>Stock</th>
+                      <th>Name</th>
+                      <th>Category</th>
+                      <th>Stock</th>
+
                 </tr>
             </thead>
             <tbody>
-                {products.map((product, index) => (
-                <tr key={index}  onClick={() => setLocalProduct(product)}>         
-                    <td>{product.productID}</td>
-                    <td>{product.brand} {product.name}</td>
-                    <td>{getStock(product.inStock)}</td>
-                  </tr>
-                ))}
+                  {products.map((product, index) => {
+                      return (
+                          <tr key={index} onClick={() => setLocalProduct(product)}>
+                              <td>{product.productID}</td>
+                              <td>{product.name}</td>
+                              <td>{categorys.find(cat => cat.productCategoryID === product.productCategoryID)?.category}</td>                              <td>{getStock(product.inStock)}</td>
+                          </tr>
+                      );
+                  })}
             </tbody>
         </table>
         <div className='product-panel'>
@@ -82,9 +86,9 @@ function Products() {
               </label>
               <label>
                   Category
-                  <select name="category" value={localProduct?.category || ''} onChange={handleInputChange}>
-                      {categorys.map((cat, index) => (
-                          <option key={index} value={cat.id}>{cat.category}</option>
+                  <select name="category" value={localProduct.ProductCategoryID} onChange={handleInputChange}>
+                      {Array.isArray(categorys) && categorys.map((cat, index) => (
+                          <option key={index} value={cat.ProductCategoryID}>{cat.category}</option>
                       ))}
                   </select>
               </label>

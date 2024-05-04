@@ -6,7 +6,7 @@ import { formatPrice } from '../../utils/hooks/useUtil';
 
 function CartItem() {
   const { removeFromCart, updateQuantity, items } = useCart();
-
+    console.log(items)
   return (  
     <>
       {items.map((item) => (
@@ -23,7 +23,7 @@ function CartItem() {
               <a onClick={() => removeFromCart(item.product.id, item.size)}>Remove</a>
               </div>
               <div className='cart-item-right'>
-                <p>{formatPrice(item.price)}</p>
+                <p>{formatPrice(item.product.price)}</p>
                 <div className='cart-item-quantity'>
                   <a onClick={() => updateQuantity(item.product.id, item.size, item.quantity - 1)}>-</a>
                   <input type="number" value={item.quantity} onChange={(e) => {

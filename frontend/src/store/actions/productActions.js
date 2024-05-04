@@ -8,7 +8,7 @@ export const fetchProducts = createAsyncThunk(
     async (_, { rejectWithValue }) => {
         try {
             const products = await productApi.getProducts();
-            const productCategories = await categoryApi.getProductCategorys();
+            const productCategories = await categoryApi.getCategorys();
             const productCategoriesMap = productCategories.reduce((map, category) => {
                 if (!map[category.ProductID]) {
                     map[category.ProductID] = [];
@@ -18,10 +18,10 @@ export const fetchProducts = createAsyncThunk(
             }, {});
             const productsWithCategories = products.map(product => {
                 const { ProductID } = product;
-                const categories = productCategoriesMap[ProductID] || [];
-                const minPrice = Math.min(...categories.map(({ Price }) => Price));
-                const inStock = categories.length > 0;
-                return { ...product, categories, defaultPrice: minPrice, inStock };
+                const categorys = productCategoriesMap[ProductID] || [];
+                const minPrice = Math.min(...categorys.map(({ Price }) => Price));
+                const inStock = categorys.length > 0;
+                return { ...product, categorys, defaultPrice: minPrice, inStock };
             });
             return productsWithCategories;
         } catch (error) {

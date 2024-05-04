@@ -23,12 +23,7 @@ namespace backend.Repositories
 
         public List<ProductCategory> GetById(int id)
         {
-            return _context.ProductCategorys.Where(ps => ps.ProductID == id).ToList();
-        }
-
-        public List<ProductCategory> GetByProductId(int productId)
-        {
-            return _context.ProductCategorys.Where(ps => ps.ProductID == productId).ToList();
+            return _context.ProductCategorys.Where(ps => ps.ProductCategoryID == id).ToList();
         }
 
         public bool Add(ProductCategory productCategory)
